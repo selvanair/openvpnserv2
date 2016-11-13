@@ -18,7 +18,7 @@ namespace OpenVpn
         [DllImport("kernel32.dll", SetLastError = true)]
         public static extern bool CloseHandle(IntPtr hObject);
 
-        [DllImport("kernel32.dll")]
+        [DllImport("kernel32.dll", SetLastError = true)]
         public static extern bool SetEvent(IntPtr hEvent);
     }
 
@@ -306,12 +306,18 @@ namespace OpenVpn
             {
                 if (!process.HasExited)
                 {
-                    process.Exited -= Watchdog; // Don't restart the process after exit
                     var h = SysWin32.CreateEvent(IntPtr.Zero, true, false, exitEvent);
                     if (h != IntPtr.Zero)
                     {
+                        process.Exited -= Watchdog; // Don't restart the process after exit
                         SysWin32.SetEvent(h);
                         SysWin32.CloseHandle(h);
+                    }
+                    else
+                    {
+                        var e = Marshal.GetLastWin32Error();
+                        config.eventLog.WriteEntry ("Error creating exit event named '" + exitEvent
+                                                    + "' (error code = " + e + ")", EventLogEntryType.Error);
                     }
                 }
             }

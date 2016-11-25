@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenVpnService", "OpenVpnService.csproj", "{A4132C5D-DB75-434C-8C33-2DC79AFCC27F}"
 EndProject
 Global
@@ -27,6 +25,10 @@ Global
 		{A4132C5D-DB75-434C-8C33-2DC79AFCC27F}.Release|x64.Build.0 = Release|x64
 		{A4132C5D-DB75-434C-8C33-2DC79AFCC27F}.Release|x86.ActiveCfg = Release|x86
 		{A4132C5D-DB75-434C-8C33-2DC79AFCC27F}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = OpenVpnService.csproj
+		version = 1.3.0.0
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

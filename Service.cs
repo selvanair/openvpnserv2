@@ -250,6 +250,11 @@ namespace OpenVpn
             var justFilename = System.IO.Path.GetFileName(configFile);
             var logFilename = config.logDir + "\\" +
                     justFilename.Substring(0, justFilename.Length - config.configExt.Length) + ".log";
+            var currentConfigDir = Path.GetDirectoryName(configFile);
+            if (currentConfigDir == null || currentConfigDir.Length == 0)
+            {
+                currentConfigDir = config.configDir;
+            }
 
             // FIXME: if (!init_security_attributes_allow_all (&sa))
             //{
@@ -279,7 +284,7 @@ namespace OpenVpn
 
                 FileName = config.exePath,
                 Arguments = String.Join(" ", procArgs),
-                WorkingDirectory = config.configDir,
+                WorkingDirectory = currentConfigDir,
 
                 UseShellExecute = false,
                 /* create_new_console is not exposed -- but we probably don't need it?*/

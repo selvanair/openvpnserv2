@@ -239,6 +239,7 @@ namespace OpenVpn
         OpenVpnServiceConfiguration config;
         string configFile;
         string exitEvent;
+        string workDirectory;
 
         public OpenVpnChild(OpenVpnServiceConfiguration config, string configFile) {
             this.config = config;
@@ -250,7 +251,13 @@ namespace OpenVpn
             var justFilename = System.IO.Path.GetFileName(configFile);
             var logFilename = config.logDir + "\\" +
                     justFilename.Substring(0, justFilename.Length - config.configExt.Length) + ".log";
-
+            
+            var workDirectory = Path.GetDirectoryName(configFile);
+            if (workDirectory == null || workdirectory.Length == 0)
+            {
+                workDirectory = config.configDir;
+            }
+            
             // FIXME: if (!init_security_attributes_allow_all (&sa))
             //{
             //    MSG (M_SYSERR, "InitializeSecurityDescriptor start_" PACKAGE " failed");
@@ -279,8 +286,7 @@ namespace OpenVpn
 
                 FileName = config.exePath,
                 Arguments = String.Join(" ", procArgs),
-                WorkingDirectory = config.configDir,
-
+                WorkingDirectory = workDirectory,
                 UseShellExecute = false,
                 /* create_new_console is not exposed -- but we probably don't need it?*/
             };
